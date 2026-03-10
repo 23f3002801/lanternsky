@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #03071E;
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  cursor: default;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Night sky gradient */
+.night-sky {
+  background: radial-gradient(ellipse at 50% 100%, #1A1040 0%, #0A0E2A 40%, #03071E 100%);
+}
+
+/* Frosted glass modal */
+.glass-panel {
+  background: rgba(10, 14, 42, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+textarea {
+  resize: none;
+  background: transparent;
+  outline: none;
+}
+
+textarea::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+input {
+  outline: none;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+@keyframes lanternFlicker {
+  0%, 100% { filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 20px currentColor); }
+  33%  { filter: drop-shadow(0 0 12px currentColor) drop-shadow(0 0 30px currentColor); }
+  66%  { filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 15px currentColor); }
+}
+
+.lantern-flicker {
+  animation: lanternFlicker 2.5s ease-in-out infinite;
+}
+
+.fade-overlay {
+  background: linear-gradient(to top, #03071E 0%, transparent 30%);
+  pointer-events: none;
+}
