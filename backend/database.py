@@ -13,9 +13,15 @@ db = None
 
 async def connect_db():
     global client, db
-    client = AsyncIOMotorClient(MONGO_URI)
+    client = AsyncIOMotorClient(
+        MONGO_URI,
+        tls=True,
+        tlsAllowInvalidCertificates=False,
+        serverSelectionTimeoutMS=30000,
+        connectTimeoutMS=30000,
+        socketTimeoutMS=30000,
+    )
     db = client[DB_NAME]
-    # Create indexes
     await db.lanterns.create_index("created_at")
     await db.lanterns.create_index("mood")
     print(f"✅ Connected to MongoDB: {DB_NAME}")

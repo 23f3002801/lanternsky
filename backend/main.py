@@ -2,28 +2,25 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(__file__))
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes.lanterns import router as lanterns_router
 from database import connect_db, close_db
+from routes.lanterns import router as lanterns_router
 
-app = FastAPI(
-    title="LanternSky API",
-    description="Backend for the LanternSky wish-sharing experience",
-    version="1.0.0"
-)
 
-@app.on_event("startup")
-async def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await connect_db()
-
-@app.on_event("shutdown")
-async def shutdown():
+    yield
     await close_db()
+
+
+app = FastAPI(title="LanternSky API", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://lanternsky.vercel.app"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
